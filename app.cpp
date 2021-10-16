@@ -1,4 +1,5 @@
 #include "app.h"
+#include "EventResolver.h"
 #include "strings.cpp"
 
 void App::init() {
@@ -11,13 +12,16 @@ void App::init() {
 }
 
 void App::startEventLoop() {
-    this->shouldClose = false;
+    this->isRunning = true;
     this->eventLoop();
 }
 
 void App::eventLoop() {
-    while (!this->shouldClose)
+    auto eventResolver = new EventResolver(this);
+    
+    while (this->isRunning)
     {
+        eventResolver->resolveEvents();
         SDL_UpdateWindowSurface(this->window);
     }
 }
@@ -34,4 +38,8 @@ void App::createWindow() {
 
     this->surface = SDL_GetWindowSurface(this->window);
     this->renderer = SDL_CreateSoftwareRenderer(this->surface);
+}
+
+void App::setIsRunning(bool value) {
+    this->isRunning = value;
 }

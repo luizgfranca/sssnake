@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SDL2/SDL.h>
 
 class App;
@@ -8,7 +10,7 @@ class App
     SDL_Renderer *renderer;
     SDL_Surface *surface;
 
-    bool shouldClose;
+    bool isRunning;
 
     void startEventLoop();
     void eventLoop();
@@ -16,5 +18,6 @@ class App
 
     public: 
         void init();
+        void setIsRunning(bool value);
 
 };
