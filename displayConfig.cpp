@@ -11,3 +11,5 @@ const int BACKGROUND_COLOR_R = 0;
 const int BACKGROUND_COLOR_G = 0;
 const int BACKGROUND_COLOR_B = 0;
 const int BACKGROUND_COLOR_A = 0;
+
+const int STEP_DELAY = 1000;

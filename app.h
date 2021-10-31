@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 #include "Renderer.h"
+#include "Snake.h"
+#include "FrameTimer.h"
 
 class App;
 
@@ -10,22 +12,22 @@ class App
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Surface *surface;
-    SDL_Rect viewPort;
 
-    int horizontalScale;
-    int verticalScale;
     Renderer *renderEngine;
+    FrameTimer *frameTimer;
 
     bool isRunning;
 
-    SDL_Rect player;
+    Snake *player;
 
     void startEventLoop();
     void eventLoop();
     void createWindow();
     void setupRenderingEngine();
+    void setupPlayer();
     void setupInitialState();
     void updateScaling();
+    void startFrameTImer();
 
     public: 
         void init();

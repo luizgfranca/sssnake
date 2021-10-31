@@ -4,7 +4,7 @@ OUTPATH = out
 LIBS = -lSDL2 -lSDL2main
 
 
-all: main app EventResolver SDLEventHandler displayConfig Renderer
+all: main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTimer
 	$(CC) $(CFLAGS) -o \
 		$(OUTPATH)/sssnake \
 		$(OUTPATH)/main.o \
@@ -14,6 +14,8 @@ all: main app EventResolver SDLEventHandler displayConfig Renderer
 		$(OUTPATH)/SDLEventHandler.o \
 		$(OUTPATH)/displayConfig.o \
 		$(OUTPATH)/Renderer.o \
+		$(OUTPATH)/Snake.o \
+		$(OUTPATH)/FrameTimer.o \
 		$(LIBS)
 
 main:
@@ -30,6 +32,12 @@ SDLEventHandler:
 
 Renderer:
 	$(CC) $(CFLAGS) -c Renderer.cpp -o $(OUTPATH)/Renderer.o $(LIBS)
+
+Snake:
+	$(CC) $(CFLAGS) -c Snake.cpp -o $(OUTPATH)/Snake.o $(LIBS)
+
+FrameTimer:
+	$(CC) $(CFLAGS) -c FrameTimer.cpp -o $(OUTPATH)/FrameTimer.o $(LIBS)
 
 strings: 
 	$(CC) $(CFLAGS) -c strings.cpp -o $(OUTPATH)/strings.o $(LIBS)

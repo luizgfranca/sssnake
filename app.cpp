@@ -7,6 +7,7 @@ void App::init() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     createWindow();
+    setupPlayer();
     setupRenderingEngine();
     startEventLoop();
 
@@ -15,6 +16,7 @@ void App::init() {
 
 void App::startEventLoop() {
     this->isRunning = true;
+    this->startFrameTImer();
     this->setupInitialState();
     this->eventLoop();
 }
@@ -25,6 +27,12 @@ void App::eventLoop() {
     while (this->isRunning)
     {
         eventResolver->resolveEvents();
+        
+        if(!this->frameTimer->isDone())
+            continue;
+        
+        this->frameTimer->start(STEP_DELAY);
+        player->step();
         renderEngine->renderPlayer(this->player);
         SDL_UpdateWindowSurface(this->window);
     }
@@ -41,14 +49,16 @@ void App::createWindow() {
     );
 
     this->surface = SDL_GetWindowSurface(this->window);
-    this->renderer = SDL_CreateSoftwareRenderer(this->surface);
-    SDL_RenderGetViewport(this->renderer, &this->viewPort);
-    
-    this->updateScaling();    
+    this->renderer = SDL_CreateSoftwareRenderer(this->surface); 
 }
 
 void App::setupRenderingEngine() {
     this->renderEngine = new Renderer(this->renderer);
+    this->updateScaling();
+}
+
+void App::setupPlayer() {
+    this->player = new Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void App::setIsRunning(bool value) {
@@ -56,13 +66,17 @@ void App::setIsRunning(bool value) {
 }
 
 void App::updateScaling() {
-    this->horizontalScale = this->viewPort.w / SCREEN_WIDTH;
-    this->verticalScale = this->viewPort.h / SCREEN_HEIGHT;
+    this->renderEngine->setScaling(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void App::setupInitialState() {
-    player.x = ((int) floor(SCREEN_WIDTH / 2) * this->horizontalScale);
-    player.y = ((int) ceil(SCREEN_HEIGHT / 2) * this->verticalScale);
-    player.w = this->horizontalScale;
-    player.h = this->verticalScale;
+    player->setHeadPosition(
+        (int) floor(SCREEN_WIDTH / 2), 
+        (int) ceil(SCREEN_HEIGHT / 2)
+    );
+}
+
+void App::startFrameTImer() {
+    this->frameTimer = new FrameTimer();
+    this->frameTimer->start(STEP_DELAY);
 }

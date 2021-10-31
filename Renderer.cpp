@@ -3,16 +3,19 @@
 
 Renderer::Renderer(SDL_Renderer *renderer) {
     this->renderer = renderer;
-
-
-    
-
+    SDL_RenderGetViewport(this->renderer, &this->viewPort);
 }
 
-void Renderer::renderPlayer(SDL_Rect player) {
-    //SDL_Log("Renderer::renderPlayer %d %d %d %d", player.w, player.h, player.x, player.y);
+void Renderer::renderPlayer(Snake *player) {
     reset(); //just until i implement a partial update method
     
+    SDL_Rect headRect;
+    auto coordinates = player->getHeadPosition();
+    headRect.x = coordinates.x * this->horizontalScale;
+    headRect.y = coordinates.y * this->verticalScale;
+    headRect.w = this->horizontalScale;
+    headRect.h = this->verticalScale;
+
     SDL_SetRenderDrawColor(
         this->renderer,
         PLAYER_COLOR_R, 
@@ -21,7 +24,15 @@ void Renderer::renderPlayer(SDL_Rect player) {
         PLAYER_COLOR_A
     );
     
-    SDL_RenderFillRect(this->renderer, &player);
+    SDL_RenderFillRect(this->renderer, &headRect);
+}
+
+void Renderer::setScaling(int width, int height) {
+    this->width = width;
+    this->height = height;
+
+    this->horizontalScale = this->viewPort.w / width;
+    this->verticalScale = this->viewPort.h / height;
 }
 
 void Renderer::reset() {
