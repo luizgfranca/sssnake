@@ -8,10 +8,19 @@ typedef struct coordinates
     int y;
 } Coordinates;
 
+enum class Direction {
+    UP, 
+    DOWN, 
+    LEFT,
+    RIGHT
+};
+
 class Snake {
 
     int headX;
     int headY;
+
+    Direction direction;
 
     int platformWidth;
     int platformHeight;
@@ -22,5 +31,6 @@ public:
     void setHeadPosition(int x, int y);
     Coordinates getHeadPosition();
     void step();
+    void changeDirection(Direction direction);
 };
 

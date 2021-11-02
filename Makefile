@@ -2,9 +2,10 @@ CC = g++
 CFLAGS = -Wall -g 
 OUTPATH = out
 LIBS = -lSDL2 -lSDL2main
+CMD_RUN = ./out/sssnake
 
 
-all: main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTimer
+all: clear main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTimer GameEventHandler
 	$(CC) $(CFLAGS) -o \
 		$(OUTPATH)/sssnake \
 		$(OUTPATH)/main.o \
@@ -16,7 +17,10 @@ all: main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTi
 		$(OUTPATH)/Renderer.o \
 		$(OUTPATH)/Snake.o \
 		$(OUTPATH)/FrameTimer.o \
-		$(LIBS)
+		$(OUTPATH)/GameEventHandler.o \
+		$(LIBS);
+
+	$(CMD_RUN)
 
 main:
 	$(CC) $(CFLAGS) -c main.cpp -o $(OUTPATH)/main.o $(LIBS)
@@ -38,6 +42,9 @@ Snake:
 
 FrameTimer:
 	$(CC) $(CFLAGS) -c FrameTimer.cpp -o $(OUTPATH)/FrameTimer.o $(LIBS)
+
+GameEventHandler:
+	$(CC) $(CFLAGS) -c GameEventHandler.cpp -o $(OUTPATH)/GameEventHandler.o $(LIBS)
 
 strings: 
 	$(CC) $(CFLAGS) -c strings.cpp -o $(OUTPATH)/strings.o $(LIBS)

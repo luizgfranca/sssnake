@@ -1,11 +1,19 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <queue>
 #include "Renderer.h"
 #include "Snake.h"
 #include "FrameTimer.h"
 
 class App;
+
+enum class Event {
+    DIRECTION_UP,
+    DIRECTION_DOWN,
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT
+};
 
 class App 
 {
@@ -18,8 +26,6 @@ class App
 
     bool isRunning;
 
-    Snake *player;
-
     void startEventLoop();
     void eventLoop();
     void createWindow();
@@ -30,7 +36,11 @@ class App
     void startFrameTImer();
 
     public: 
+        Snake *player;
+        std::queue<Event> *eventQueue;
+
         void init();
         void setIsRunning(bool value);
+        void throwEvent(Event event);
 
 };

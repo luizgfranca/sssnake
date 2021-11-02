@@ -1,4 +1,4 @@
-const int SCREEN_RATIO = 9;
+const int SCREEN_RATIO = 20;
 const int SCREEN_WIDTH = SCREEN_RATIO;
 const int SCREEN_HEIGHT = SCREEN_RATIO;
 
@@ -12,4 +12,4 @@ const int BACKGROUND_COLOR_G = 0;
 const int BACKGROUND_COLOR_B = 0;
 const int BACKGROUND_COLOR_A = 0;
 
-const int STEP_DELAY = 1000;
+const int STEP_DELAY = 100;

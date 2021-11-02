@@ -16,6 +16,7 @@ void App::init() {
 
 void App::startEventLoop() {
     this->isRunning = true;
+    this->eventQueue = new std::queue<Event>();
     this->startFrameTImer();
     this->setupInitialState();
     this->eventLoop();
@@ -79,4 +80,8 @@ void App::setupInitialState() {
 void App::startFrameTImer() {
     this->frameTimer = new FrameTimer();
     this->frameTimer->start(STEP_DELAY);
+}
+
+void App::throwEvent(Event e) {
+    this->eventQueue->push(e);
 }
