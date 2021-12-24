@@ -13,3 +13,5 @@ const int BACKGROUND_COLOR_B = 0;
 const int BACKGROUND_COLOR_A = 0;
 
 const int STEP_DELAY = 100;
+
+const int INITIAL_SNAKE_SIZE = 6;

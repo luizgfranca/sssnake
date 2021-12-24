@@ -8,9 +8,9 @@ void App::init() {
 
     createWindow();
     setupPlayer();
+    setupInitialState();
     setupRenderingEngine();
     startEventLoop();
-
     SDL_Quit();
 }
 
@@ -18,7 +18,6 @@ void App::startEventLoop() {
     this->isRunning = true;
     this->eventQueue = new std::queue<Event>();
     this->startFrameTImer();
-    this->setupInitialState();
     this->eventLoop();
 }
 
@@ -59,7 +58,11 @@ void App::setupRenderingEngine() {
 }
 
 void App::setupPlayer() {
-    this->player = new Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
+    this->player = new Snake(
+        INITIAL_SNAKE_SIZE, 
+        SCREEN_WIDTH, 
+        SCREEN_HEIGHT
+    );
 }
 
 void App::setIsRunning(bool value) {

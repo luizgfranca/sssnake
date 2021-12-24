@@ -1,4 +1,6 @@
 #pragma once
+#include <queue>
+#include <vector>
 
 class Snake;
 
@@ -17,19 +19,26 @@ enum class Direction {
 
 class Snake {
 
-    int headX;
-    int headY;
-
+    std::queue<Coordinates> *body;
     Direction direction;
+    Coordinates trail;
+    std::vector<Coordinates> *initialSnapshot;
 
     int platformWidth;
     int platformHeight;
 
+    int size;
+
+    void createBody(int headX, int headY);
 public:
-    Snake(int platformWidth, int platformHeight);
+    Snake(int size, int platformWidth, int platformHeight);
 
     void setHeadPosition(int x, int y);
+    
     Coordinates getHeadPosition();
+    Coordinates getTrail();
+    std::vector<Coordinates> *getInitialPosition();
+    int getLength();
     void step();
     void changeDirection(Direction direction);
 };
