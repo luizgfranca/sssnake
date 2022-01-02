@@ -4,6 +4,7 @@
 #include <queue>
 #include "Renderer.h"
 #include "Snake.h"
+#include "Food.h"
 #include "FrameTimer.h"
 
 class App;
@@ -37,6 +38,7 @@ class App
 
     public: 
         Snake *player;
+        Food *food;
         std::queue<Event> *eventQueue;
 
         void init();

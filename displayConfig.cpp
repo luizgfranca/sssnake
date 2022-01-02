@@ -7,6 +7,11 @@ const int PLAYER_COLOR_G = 255;
 const int PLAYER_COLOR_B = 255;
 const int PLAYER_COLOR_A = 255;
 
+const int FOOD_COLOR_R = 255;
+const int FOOD_COLOR_G = 255;
+const int FOOD_COLOR_B = 255;
+const int FOOD_COLOR_A = 255;
+
 const int BACKGROUND_COLOR_R = 0;
 const int BACKGROUND_COLOR_G = 0;
 const int BACKGROUND_COLOR_B = 0;

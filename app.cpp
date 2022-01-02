@@ -34,6 +34,7 @@ void App::eventLoop() {
         this->frameTimer->start(STEP_DELAY);
         player->step();
         renderEngine->renderPlayer(this->player);
+        renderEngine->renderFood(this->food);
         SDL_UpdateWindowSurface(this->window);
     }
 }
@@ -63,6 +64,11 @@ void App::setupPlayer() {
         SCREEN_WIDTH, 
         SCREEN_HEIGHT
     );
+
+    this->food = new Food(
+        SCREEN_WIDTH, 
+        SCREEN_HEIGHT
+    );
 }
 
 void App::setIsRunning(bool value) {
@@ -78,6 +84,8 @@ void App::setupInitialState() {
         (int) floor(SCREEN_WIDTH / 2), 
         (int) ceil(SCREEN_HEIGHT / 2)
     );
+
+    food->generate(player);
 }
 
 void App::startFrameTImer() {

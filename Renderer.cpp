@@ -18,7 +18,7 @@ void Renderer::renderPlayer(Snake *player) {
     isFirstRun = false;
 }
 
-SDL_Rect Renderer::createBodyUnitRect(Coordinates coordinates) {
+SDL_Rect Renderer::createUnitRect(Coordinates coordinates) {
     SDL_Rect rect;
     
     rect.x = coordinates.x * this->horizontalScale;
@@ -29,18 +29,34 @@ SDL_Rect Renderer::createBodyUnitRect(Coordinates coordinates) {
     return rect;
 } 
 
-void Renderer::renderPlayerUnit(Coordinates unit) {
-    auto rect = this->createBodyUnitRect(unit);
+void Renderer::renderUnit(
+    Coordinates coord, 
+    int color_r, 
+    int color_g, 
+    int color_b, 
+    int color_a
+) {
+    auto rect = this->createUnitRect(coord);
 
     SDL_SetRenderDrawColor(
         this->renderer,
+        color_r, 
+        color_g, 
+        color_b, 
+        color_a
+    );
+
+    SDL_RenderFillRect(this->renderer, &rect);
+}
+
+void Renderer::renderPlayerUnit(Coordinates unit) {
+    this->renderUnit(
+        unit,
         PLAYER_COLOR_R, 
         PLAYER_COLOR_G, 
         PLAYER_COLOR_B, 
         PLAYER_COLOR_A
     );
-    
-    SDL_RenderFillRect(this->renderer, &rect);
 }
 
 void Renderer::renderHead(Snake *player) {
@@ -68,18 +84,13 @@ void Renderer::cleanTrail(Snake *player) {
     if(trail.x == -1 && trail.y == -1)
         return;
 
-    auto rect = this->createBodyUnitRect(trail);
-
-    SDL_SetRenderDrawColor(
-        this->renderer,
+    this->renderUnit(
+        trail,
         BACKGROUND_COLOR_R, 
         BACKGROUND_COLOR_G, 
         BACKGROUND_COLOR_B, 
         BACKGROUND_COLOR_A
     );
-    
-    SDL_RenderFillRect(this->renderer, &rect);
-
 }
 
 void Renderer::setScaling(int width, int height) {
@@ -100,4 +111,16 @@ void Renderer::reset() {
     );
 
     SDL_RenderClear(this->renderer);
+}
+
+void Renderer::renderFood(Food *food) {
+    auto coordinates = food->getPosition();
+
+    this->renderUnit(
+        coordinates,
+        FOOD_COLOR_R,
+        FOOD_COLOR_G,
+        FOOD_COLOR_B,
+        FOOD_COLOR_A
+    );
 }

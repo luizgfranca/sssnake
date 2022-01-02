@@ -1,14 +1,11 @@
 #pragma once
 #include <queue>
 #include <vector>
+#include "coordinates.h"
 
 class Snake;
 
-typedef struct coordinates
-{
-    int x;
-    int y;
-} Coordinates;
+
 
 enum class Direction {
     UP, 
@@ -38,7 +35,10 @@ public:
     Coordinates getHeadPosition();
     Coordinates getTrail();
     std::vector<Coordinates> *getInitialPosition();
+    
     int getLength();
+    bool isPositionInsideBody(Coordinates coord);
+
     void step();
     void changeDirection(Direction direction);
 };

@@ -131,3 +131,13 @@ int Snake::getLength() {
 std::vector<Coordinates> *Snake::getInitialPosition() {
     return this->initialSnapshot;
 }
+
+bool Snake::isPositionInsideBody(Coordinates coord) {
+    for(unsigned int i = 0; i < this->initialSnapshot->size(); i ++) {
+        auto position = this->initialSnapshot->at(i);
+        if(position.x == coord.x && position.y == coord.y)
+            return true;
+    }
+
+    return false;
+}
