@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SDLEventHandler.h"
 #include "app.h"
 

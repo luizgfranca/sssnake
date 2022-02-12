@@ -6,15 +6,10 @@
 #include "Snake.h"
 #include "Food.h"
 #include "FrameTimer.h"
+#include "GameLogicProcessor.h"
+#include "event.h"
 
-class App;
-
-enum class Event {
-    DIRECTION_UP,
-    DIRECTION_DOWN,
-    DIRECTION_LEFT,
-    DIRECTION_RIGHT
-};
+class GameLogicProcessor;
 
 class App 
 {
@@ -22,6 +17,7 @@ class App
     SDL_Renderer *renderer;
     SDL_Surface *surface;
 
+    GameLogicProcessor *gameLogicProcessor;
     Renderer *renderEngine;
     FrameTimer *frameTimer;
 
@@ -31,11 +27,13 @@ class App
     void eventLoop();
     void createWindow();
     void setupRenderingEngine();
-    void setupPlayer();
+    void setupApplication();
+    void setupEnvironment();
     void setupInitialState();
     void updateScaling();
     void startFrameTImer();
-
+    void evaluateCapture();
+    
     public: 
         Snake *player;
         Food *food;
@@ -44,5 +42,8 @@ class App
         void init();
         void setIsRunning(bool value);
         void throwEvent(Event event);
-
+        void generateNewFood();
+        void growSnake();
+        void doNotGrowSnake();
+        void shouldGrowSnake();
 };

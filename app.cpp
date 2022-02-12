@@ -2,12 +2,16 @@
 #include "EventResolver.h"
 #include "strings.cpp"
 #include "displayConfig.cpp"
+#include "gameState.h"
+#include "event.h"
+#include "GameLogicProcessor.h"
 
 void App::init() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     createWindow();
-    setupPlayer();
+    setupApplication();
+    setupEnvironment();
     setupInitialState();
     setupRenderingEngine();
     startEventLoop();
@@ -32,9 +36,12 @@ void App::eventLoop() {
             continue;
         
         this->frameTimer->start(STEP_DELAY);
-        player->step();
-        renderEngine->renderPlayer(this->player);
-        renderEngine->renderFood(this->food);
+
+        this->gameLogicProcessor->process();
+
+        this->renderEngine->renderPlayer(this->player);
+        this->renderEngine->renderFood(this->food);
+
         SDL_UpdateWindowSurface(this->window);
     }
 }
@@ -58,7 +65,11 @@ void App::setupRenderingEngine() {
     this->updateScaling();
 }
 
-void App::setupPlayer() {
+void App::setupApplication() {
+    this->gameLogicProcessor = new GameLogicProcessor(this);
+}
+
+void App::setupEnvironment() {
     this->player = new Snake(
         INITIAL_SNAKE_SIZE, 
         SCREEN_WIDTH, 
@@ -95,4 +106,12 @@ void App::startFrameTImer() {
 
 void App::throwEvent(Event e) {
     this->eventQueue->push(e);
+}
+
+void App::generateNewFood() {
+    this->food->generate(this->player);
+}
+
+void App::growSnake() {
+    this->gameLogicProcessor->incrementSnakeSize();
 }

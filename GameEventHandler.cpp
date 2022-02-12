@@ -1,5 +1,6 @@
 #include "GameEventHandler.h"
 #include "Snake.h"
+#include "event.h"
 
 void GameEventHandler::handle(App *app, Event e) {
     switch (e)
@@ -19,6 +20,10 @@ void GameEventHandler::handle(App *app, Event e) {
     case Event::DIRECTION_LEFT:
         app->player->changeDirection(Direction::LEFT);
         break;
+
+    case Event::CAPTURED:
+        app->generateNewFood();
+        app->growSnake();
     
     default:
         break;

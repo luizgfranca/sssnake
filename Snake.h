@@ -39,7 +39,7 @@ public:
     int getLength();
     bool isPositionInsideBody(Coordinates coord);
 
-    void step();
+    void step(bool shouldClearTrail);
     void changeDirection(Direction direction);
 };
 

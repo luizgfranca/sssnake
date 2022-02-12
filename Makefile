@@ -5,7 +5,7 @@ LIBS = -lSDL2 -lSDL2main
 CMD_RUN = ./out/sssnake
 
 
-all: clear main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTimer GameEventHandler Food
+all: clear main app EventResolver SDLEventHandler displayConfig Renderer Snake FrameTimer GameEventHandler Food GameLogicProcessor
 	$(CC) $(CFLAGS) -o \
 		$(OUTPATH)/sssnake \
 		$(OUTPATH)/main.o \
@@ -18,6 +18,7 @@ all: clear main app EventResolver SDLEventHandler displayConfig Renderer Snake F
 		$(OUTPATH)/Snake.o \
 		$(OUTPATH)/FrameTimer.o \
 		$(OUTPATH)/GameEventHandler.o \
+		$(OUTPATH)/GameLogicProcessor.o \
 		$(OUTPATH)/Food.o \
 		$(LIBS);
 
@@ -46,6 +47,9 @@ FrameTimer:
 
 GameEventHandler:
 	$(CC) $(CFLAGS) -c GameEventHandler.cpp -o $(OUTPATH)/GameEventHandler.o $(LIBS)
+
+GameLogicProcessor:
+	$(CC) $(CFLAGS) -c GameLogicProcessor.cpp -o $(OUTPATH)/GameLogicProcessor.o $(LIBS)
 
 Food:
 	$(CC) $(CFLAGS) -c Food.cpp -o $(OUTPATH)/Food.o $(LIBS)

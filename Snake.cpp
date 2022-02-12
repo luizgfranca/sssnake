@@ -74,7 +74,7 @@ Coordinates Snake::getHeadPosition() {
     return coord;
 }
 
-void Snake::step() {
+void Snake::step(bool shouldClearTail) {
     int headX = this->getHeadPosition().x;
     int headY = this->getHeadPosition().y;
 
@@ -113,7 +113,9 @@ void Snake::step() {
     this->body->push({headX, headY});
 
     this->trail = this->body->front();
-    this->body->pop();
+
+    if(!shouldClearTail)
+        this->body->pop();
 }
 
 void Snake::changeDirection(Direction direction) {
