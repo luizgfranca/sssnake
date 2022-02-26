@@ -14,8 +14,8 @@ Snake::Snake(int size, int platformWidth, int platformHeight) {
     this->trail = {-1, -1};
 }
 void Snake::setHeadPosition(int x, int y) {
-    int headX = (x < platformWidth) ? x : 0;
-    int headY = (y < platformHeight) ? y : 0;
+    int headX = (x < (platformWidth - 1)) ? x : 0;
+    int headY = (y < (platformHeight - 1)) ? y : 0;
 
     this->createBody(headX, headY);
 }
@@ -89,14 +89,14 @@ void Snake::step(bool shouldClearTail) {
     
     case Direction::DOWN:
         headY ++;
-        if(headY > this->platformHeight)
+        if(headY > this->platformHeight - 1)
             headY = 0;
             
         break;
 
     case Direction::RIGHT:
         headX ++;
-        if(headX > this->platformWidth)
+        if(headX > this->platformWidth - 1)
             headX = 0;
         break;
 
@@ -110,6 +110,7 @@ void Snake::step(bool shouldClearTail) {
         break;
     }
 
+    SDL_Log("(%d, %d)", headX, headY);
     this->body->push({headX, headY});
 
     this->trail = this->body->front();
