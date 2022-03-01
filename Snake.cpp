@@ -6,7 +6,7 @@ Snake::Snake(int size, int platformWidth, int platformHeight) {
     this->platformHeight = platformHeight;
     this->size = size;
 
-    this->body = new std::queue<Coordinates>();
+    this->body = new std::vector<Coordinates>();
     this->initialSnapshot = new std::vector<Coordinates>();
 
     this->direction = Direction::RIGHT;
@@ -53,13 +53,13 @@ void Snake::createBody(int headX, int headY) {
     }
 
     for(int i = this->initialSnapshot->size() - 1; i > 0; i --) {
-        this->body->push({
+        this->updateHead({
             this->initialSnapshot->at(i).x, 
             this->initialSnapshot->at(i).y
         });
     }
 
-    this->body->push({headX, headY});
+    this->updateHead({headX, headY});
 
 }
 
@@ -110,13 +110,12 @@ void Snake::step(bool shouldClearTail) {
         break;
     }
 
-    SDL_Log("(%d, %d)", headX, headY);
-    this->body->push({headX, headY});
+    this->updateHead({headX, headY});
 
     this->trail = this->body->front();
 
     if(!shouldClearTail)
-        this->body->pop();
+        this->popTail();
 }
 
 void Snake::changeDirection(Direction direction) {
@@ -143,4 +142,12 @@ bool Snake::isPositionInsideBody(Coordinates coord) {
     }
 
     return false;
+}
+
+void Snake::updateHead(Coordinates coord) {
+    this->body->push_back(coord);
+}
+
+void Snake::popTail() {
+    this->body->erase(this->body->begin());
 }
