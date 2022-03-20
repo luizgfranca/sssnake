@@ -13,6 +13,9 @@ void GameLogicProcessor::process() {
         context->throwEvent(Event::CAPTURED);
     }
 
+    if( this->hasPlayerSelfEaten() )
+        context->throwEvent(Event::GAME_OVER);
+
     this->shouldIncrementSnakeSize = false;
 }
 
@@ -22,6 +25,14 @@ bool GameLogicProcessor::wasFoodCaptured() {
     auto foodPosition = this->context->food->getPosition();
 
     return (head.x == foodPosition.x && head.y == foodPosition.y);
+}
+
+bool GameLogicProcessor::hasPlayerSelfEaten() {
+    return (
+        this->context->player->isPositionInsideBody(
+            this->context->player->getHeadPosition()
+        )
+    );
 }
 
 void GameLogicProcessor::incrementSnakeSize() {

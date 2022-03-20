@@ -22,6 +22,7 @@ class App
     FrameTimer *frameTimer;
 
     bool isRunning;
+    bool isGameOver;
 
     void startEventLoop();
     void eventLoop();
@@ -46,4 +47,5 @@ class App
         void growSnake();
         void doNotGrowSnake();
         void shouldGrowSnake();
+        void gameOver();
 };

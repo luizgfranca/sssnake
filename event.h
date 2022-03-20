@@ -5,5 +5,6 @@ enum class Event {
     DIRECTION_DOWN,
     DIRECTION_LEFT,
     DIRECTION_RIGHT,
-    CAPTURED
+    CAPTURED,
+    GAME_OVER
 };

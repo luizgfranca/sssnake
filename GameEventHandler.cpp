@@ -24,7 +24,12 @@ void GameEventHandler::handle(App *app, Event e) {
     case Event::CAPTURED:
         app->generateNewFood();
         app->growSnake();
+        break;
     
+    case Event::GAME_OVER:
+        app->gameOver();
+        break;
+
     default:
         break;
     }

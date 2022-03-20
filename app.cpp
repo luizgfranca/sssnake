@@ -20,6 +20,7 @@ void App::init() {
 
 void App::startEventLoop() {
     this->isRunning = true;
+    this->isGameOver = false;
     this->eventQueue = new std::queue<Event>();
     this->startFrameTImer();
     this->eventLoop();
@@ -32,7 +33,7 @@ void App::eventLoop() {
     {
         eventResolver->resolveEvents();
         
-        if(!this->frameTimer->isDone())
+        if(!this->frameTimer->isDone() || this->isGameOver)
             continue;
         
         this->frameTimer->start(STEP_DELAY);
@@ -114,4 +115,8 @@ void App::generateNewFood() {
 
 void App::growSnake() {
     this->gameLogicProcessor->incrementSnakeSize();
+}
+
+void App::gameOver() {
+    this->isGameOver = true;
 }

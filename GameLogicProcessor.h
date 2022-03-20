@@ -10,6 +10,7 @@ class GameLogicProcessor {
     bool shouldIncrementSnakeSize;
 
     bool wasFoodCaptured();
+    bool hasPlayerSelfEaten();
 
     public: 
         GameLogicProcessor(App *context);

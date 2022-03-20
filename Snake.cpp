@@ -135,8 +135,9 @@ std::vector<Coordinates> *Snake::getInitialPosition() {
 }
 
 bool Snake::isPositionInsideBody(Coordinates coord) {
-    for(unsigned int i = 0; i < this->initialSnapshot->size(); i ++) {
-        auto position = this->initialSnapshot->at(i);
+    
+    for(unsigned int i = 0; i < (this->body->size() - 1); i ++) {
+        auto position = this->body->at(i);
         if(position.x == coord.x && position.y == coord.y)
             return true;
     }
