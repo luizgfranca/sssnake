@@ -17,6 +17,7 @@ enum class Direction {
 class Snake {
 
     std::vector<Coordinates> *body;
+    Direction newDirection;
     Direction direction;
     Coordinates trail;
     std::vector<Coordinates> *initialSnapshot;
@@ -29,6 +30,7 @@ class Snake {
     void createBody(int headX, int headY);
     void updateHead(Coordinates coord);
     void popTail();
+    bool handleDirectionInversion();
 public:
     Snake(int size, int platformWidth, int platformHeight);
 

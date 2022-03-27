@@ -9,7 +9,7 @@ Snake::Snake(int size, int platformWidth, int platformHeight) {
     this->body = new std::vector<Coordinates>();
     this->initialSnapshot = new std::vector<Coordinates>();
 
-    this->direction = Direction::RIGHT;
+    this->newDirection = Direction::RIGHT;
 
     this->trail = {-1, -1};
 }
@@ -27,7 +27,7 @@ void Snake::createBody(int headX, int headY) {
     this->initialSnapshot->push_back({headX, headY});
 
     for(int i = 0; i <= this->size - 2; i ++) {
-        switch (this->direction)
+        switch (this->newDirection)
         {
         case Direction::RIGHT:
             x --;
@@ -60,7 +60,7 @@ void Snake::createBody(int headX, int headY) {
     }
 
     this->updateHead({headX, headY});
-
+    this->direction = this->newDirection;
 }
 
 Coordinates Snake::getHeadPosition() {
@@ -78,7 +78,9 @@ void Snake::step(bool shouldClearTail) {
     int headX = this->getHeadPosition().x;
     int headY = this->getHeadPosition().y;
 
-    switch (this->direction)
+    this->handleDirectionInversion();
+
+    switch (this->newDirection)
     {
     case Direction::UP:
         headY --;
@@ -112,6 +114,7 @@ void Snake::step(bool shouldClearTail) {
 
     this->updateHead({headX, headY});
 
+    this->direction = this->newDirection;
     this->trail = this->body->front();
 
     if(!shouldClearTail)
@@ -119,7 +122,7 @@ void Snake::step(bool shouldClearTail) {
 }
 
 void Snake::changeDirection(Direction direction) {
-    this->direction = direction;
+    this->newDirection = direction;
 }
 
 Coordinates Snake::getTrail() {
@@ -151,4 +154,17 @@ void Snake::updateHead(Coordinates coord) {
 
 void Snake::popTail() {
     this->body->erase(this->body->begin());
+}
+
+bool Snake::handleDirectionInversion() {
+    bool isDirectionInverted = 
+        (this->newDirection == Direction::DOWN && this->direction == Direction::UP)
+        || (this->newDirection == Direction::UP && this->direction == Direction::DOWN)
+        || (this->newDirection == Direction::LEFT && this->direction == Direction::RIGHT)
+        || (this->newDirection == Direction::RIGHT && this->direction == Direction::LEFT);
+
+    if(isDirectionInverted)
+        this->newDirection = this->direction;
+
+    return isDirectionInverted;
 }
